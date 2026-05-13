@@ -1,0 +1,10 @@
+# Maven
+target/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Sensitive config
+src/main/resources/application.properties
