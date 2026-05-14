@@ -1,5 +1,7 @@
 package com.webtruyen.first.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,9 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
     
 }

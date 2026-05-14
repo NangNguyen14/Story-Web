@@ -1,5 +1,7 @@
 package com.webtruyen.first.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,10 @@ import com.webtruyen.first.repository.CommentRepository;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
+
+    public List<Comment> getComments() {
+        return commentRepository.findAll();
+    }
     
     public Comment getCommentById(Long id) {
         return commentRepository.findById(id)
@@ -24,9 +30,11 @@ public class CommentService {
         return commentRepository.save(comment);
     }
     public void deleteComment(Long id) {
-    Comment comment = getCommentById(id);
-    comment.setDeleted(true);
-    commentRepository.save(comment);
-}
-
+        Comment comment = getCommentById(id);
+        comment.setDeleted(true);
+        commentRepository.save(comment);
+    }
+    public List<Comment> getCommentsByChapterId(Long chapterId) {
+        return commentRepository.findByChapterIdAndDeletedFalse(chapterId);
+    }
 }
