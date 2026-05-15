@@ -12,15 +12,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "bookmarks")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Bookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +36,17 @@ public class Bookmark {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-    
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bookmark)) return false;
+        Bookmark bookmark = (Bookmark) o;
+        return id != null && id.equals(bookmark.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

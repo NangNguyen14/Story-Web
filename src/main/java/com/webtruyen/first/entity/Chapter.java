@@ -19,21 +19,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name = "chapters")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Chapter {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private int chapterNumber;
 
     @Column(nullable = false)
@@ -55,4 +53,16 @@ public class Chapter {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Chapter)) return false;
+        Chapter chapter = (Chapter) o;
+        return id != null && id.equals(chapter.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

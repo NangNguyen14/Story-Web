@@ -14,22 +14,21 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 @Entity
 @Table(name = "comments")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -46,6 +45,17 @@ public class Comment {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+        Comment comment = (Comment) o;
+        return id != null && id.equals(comment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

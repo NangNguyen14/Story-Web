@@ -22,13 +22,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
 @Table(name = "stories")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +51,7 @@ public class Story {
     private StoryStatus status = StoryStatus.ONGOING;
 
     @ManyToOne
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name = "user_id")
     private User author;
 
     @OneToMany(mappedBy = "story")
@@ -70,4 +70,17 @@ public class Story {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Story)) return false;
+        Story story = (Story) o;
+        return id != null && id.equals(story.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

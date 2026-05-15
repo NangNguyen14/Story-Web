@@ -9,36 +9,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.webtruyen.first.enums.Role;
-
 @Entity
 @Table(name = "users")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String name;
-    //private String avatarUrl;
+
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+
     @Column(name = "is_active")
     private boolean isActive = true;
 
@@ -47,4 +48,18 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    // Dùng email vì là unique + không thay đổi
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
 }
