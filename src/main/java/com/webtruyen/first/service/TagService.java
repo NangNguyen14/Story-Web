@@ -32,4 +32,7 @@ public class TagService {
     public List<Tag> getAllTags() {
     return tagRepository.findAll();
 }
+    public List<Tag> getTagsByStoryId(Long storyId) {
+        return tagRepository.findByStories_Id(storyId);
+    }
 }
